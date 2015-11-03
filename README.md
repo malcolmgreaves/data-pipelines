@@ -1,7 +1,7 @@
 # data-pipelines
 Training code for Datapalooza
 
-Thursday 11/12: Marek and Malcolm, Research Engineers at Nitro Inc.
+### Thursday 11/12: Marek and Malcolm, Research Engineers at Nitro Inc.
 
 During this all-day live coding session, we will demonstrate the power and elegance of functional programming for building data pipelines. To this end, our session will culminate in constructing efficient, clean implementations of learning algorithms. We will use the live coding medium as an educational tool to teach attendees the concepts necessary to build modern and scalable data processing programs. To eat our own dogfood, we’ll use the code we write during the session to explore publicly available datasets.
 
@@ -13,7 +13,7 @@ In the second session, we will take a deeper dive into machine learning and the 
 
 Below, we present the sequence of topics for the entire day:
 
-First Session: Malcolm (3 hours)
+##### First Session: Malcolm (3 hours)
 * [20 min.] Introduction to the Scala language and essential functional programming concepts.
   * Language syntax.
   * Functions as values.
@@ -28,7 +28,7 @@ First Session: Malcolm (3 hours)
   * Live coding of elegant k-means and k-nearest neighbors algorithms.
   * Visualization using WISP.
 
-Second Session: Marek (3 hours)
+##### Second Session: Marek (3 hours)
 * Guaranteed topics
   * introduction to convex optimization
   * introduction to performant linear algebra (vectorization)
