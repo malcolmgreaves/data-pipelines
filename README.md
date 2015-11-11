@@ -34,11 +34,9 @@ Below, we present the sequence of topics for the entire day:
   * Visualization using WISP.
 
 ##### Second Session: Marek (3 hours)
-* Guaranteed topics
-  * introduction to convex optimization
-  * introduction to performant linear algebra (vectorization)
-  * supervised learning and loss functions 
-  * how to distribute the stochastic gradient descent (SGD) optimizer on Spark
-* One of the following:
-  * distributed implementation of linear regression
-  * introduction to deep learning and distributed implementation of the multi-layer perceptron (MLP) neural network
+* introduction to performant linear algebra (vectorization)
+* supervised learning and loss functions 
+* how to distribute the stochastic gradient descent (SGD) optimizer on Spark
+* introduction to deep learning
+* distributed implementation of the multi-layer perceptron (MLP) neural network
+* showcase of Spark-backed MLP - the MNIST handwritten digit recognition dataset
