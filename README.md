@@ -33,6 +33,7 @@ Below, we present the sequence of topics for the entire day:
   * Visualization using WISP.
 
 ##### Second Session: Marek (3 hours)
+[link to slide deck](https://docs.google.com/presentation/d/1KLaZXPkmN9aJIRM-r9W4lMh3cKLLmA2BM-sOH_3A5YA/edit?usp=sharing)
 * introduction to performant linear algebra (vectorization)
 * supervised learning and loss functions 
 * how to distribute the stochastic gradient descent (SGD) optimizer on Spark
