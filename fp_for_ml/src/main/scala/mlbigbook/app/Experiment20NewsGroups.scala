@@ -6,9 +6,6 @@ import fif.TravData
 import mlbigbook.data.SimpleVec
 import mlbigbook.ml.{ Euclidian, NearestNeighbors }
 import mlbigbook.text.{ ShowImplicits, BagOfWords }
-import org.apache.spark.SparkContext
-
-import scala.io.Source
 import scala.util.Random
 
 object Experiment20NewsGroups extends App {
