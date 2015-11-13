@@ -18,6 +18,7 @@ In the second session, we will take a deeper dive into machine learning and the 
 Below, we present the sequence of topics for the entire day:
 
 ##### First Session: Malcolm (3 hours)
+[link to slide deck](https://cloud.gonitro.com/p/XNu7yg-NQ_2AEYXg7g2Sjg)
 * [20 min.] Introduction to the Scala language and essential functional programming concepts.
   * Language syntax.
   * Functions as values.
