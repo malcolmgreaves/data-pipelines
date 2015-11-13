@@ -1,96 +1,104 @@
-//
-// [slide] using abstract data types
-//
+package snippets
 
-// using the built-in Option type
-// indicating that it may or may not have a value
-// or, now you never have to deal with null!
+// This code is meant to be inspected and executed in the REPL in chunks.
+object IntroADTs {
 
-def printOpt(x: Option[String]) = 
-	x match {
+  //
+  // [slide] using abstract data types
+  //
 
-		case Some(str) => 
-			println(s"Hey! We have something here, it is: $str")
+  // using the built-in Option type
+  // indicating that it may or may not have a value
+  // or, now you never have to deal with null!
 
-		case None =>
-			println(s"Oh...we have nothing.")
-	}
+  def printOpt(x: Option[String]) =
+    x match {
 
-printOpt(Some("hello!"))
-printOpt(Some("pretty neat!"))
-printOpt(None)
+      case Some(str) =>
+        println(s"Hey! We have something here, it is: $str")
 
-//
-// [slide] making our own abstract data types
-//
+      case None =>
+        println(s"Oh...we have nothing.")
+    }
 
-type UserName = String
-type UUID = Long
-case class User(name: UserName, id: UUID)
+  printOpt(Some("hello!"))
+  printOpt(Some("pretty neat!"))
+  printOpt(None)
 
-sealed trait Request
+  //
+  // [slide] making our own abstract data types
+  //
 
-case class FetchInformation(u: User) extends Request
-case object SystemStatus extends Request
+  type UserName = String
+  type UUID = Long
+  case class User(name: UserName, id: UUID)
 
-type Message = String
+  sealed trait Request
 
-case class PostToFeed(u: User, m: Message) extends Request
+  case class FetchInformation(u: User) extends Request
+  case object SystemStatus extends Request
 
-case class Send(from: User, m: Message, to: User) extends Request
+  type Message = String
 
-def handle(r: Request): Unit = 
-	r match {
+  case class PostToFeed(u: User, m: Message) extends Request
 
-		case FetchInformation(user) =>
-			println(s"Fetching information for ${user}")
+  case class Send(from: User, m: Message, to: User) extends Request
 
-		case SystemStatus =>
-			println(s"System OK. Current time: ${System.currentTimeMillis}ms")
+  def handle(r: Request): Unit =
+    r match {
 
-		case PostToFeed(user, message) =>
-			println(s"""Posting "$message" to feed for $user""")
+      case FetchInformation(user) =>
+        println(s"Fetching information for ${user}")
 
-		case Send(from, message, to) =>
-			println(s"""Sending a message from user $from to user $to : "$message" """)
-	}
+      case SystemStatus =>
+        println(s"System OK. Current time: ${System.currentTimeMillis}ms")
 
-handle(SystemStatus)
-val u1 = User("bobby", 125151245l)
-handle(FetchInformation(u1))
-handle(PostToFeed(u1, "omgz! I'm on the interwebzzzz"))
-handle(PostToFeed(u1, "I am l33t"))
-val u2 = User("sally", 666363l)
-handle(Send(u2, "Please be quiet.", u1))
-handle(SystemStatus)
+      case PostToFeed(user, message) =>
+        println(s"""Posting "$message" to feed for $user""")
 
+      case Send(from, message, to) =>
+        println(s"""Sending a message from user $from to user $to : "$message" """)
+    }
 
-sealed trait MaybeString
-case class Just(a: String) extends MaybeString
-case object NoString extends MaybeString
+  handle(SystemStatus)
+  val u1 = User("bobby", 125151245l)
+  handle(FetchInformation(u1))
+  handle(PostToFeed(u1, "omgz! I'm on the interwebzzzz"))
+  handle(PostToFeed(u1, "I am l33t"))
+  val u2 = User("sally", 666363l)
+  handle(Send(u2, "Please be quiet.", u1))
+  handle(SystemStatus)
 
+  sealed trait MaybeString
+  case class Just(a: String) extends MaybeString
+  case object NoString extends MaybeString
 
-// the following fails at compile time
-// precisely because we're not handling every type of Request
-// (this is ** awesome ** )
-def handleBad(r: Request): Unit = 
-	r match {
-		case FetchInformation(user) =>
-			println(s"Fetching information for ${user}")
-	}
+  /*
 
+  // the following fails at compile time
+  // precisely because we're not handling every type of Request
+  // (this is ** awesome ** )
+  def handleBad(r: Request): Unit =
+    r match {
+      case FetchInformation(user) =>
+        println(s"Fetching information for ${user}")
+    }
 
-// what if we didn't have "sealed" ?
-trait UnsafeRequest
-case class UnsafeFetchInformation(u: User) extends UnsafeRequest
-case object UnsafeSystemStatus extends UnsafeRequest
+  */
 
-// ahh! this compiles
-def unsafeHandle(r: UnsafeRequest): Unit = 
-	r match {
-		case UnsafeFetchInformation(user) =>
-			println(s"Fetching information for ${user}")
-	}
+  // what if we didn't have "sealed" ?
+  trait UnsafeRequest
+  case class UnsafeFetchInformation(u: User) extends UnsafeRequest
+  case object UnsafeSystemStatus extends UnsafeRequest
 
-// oh no :(
-unsafeHandle(UnsafeSystemStatus) // fails with MatchError
+  // ahh! this compiles
+  def unsafeHandle(r: UnsafeRequest): Unit =
+    r match {
+      case UnsafeFetchInformation(user) =>
+        println(s"Fetching information for ${user}")
+    }
+
+  // oh no :(
+  unsafeHandle(UnsafeSystemStatus) // fails with MatchError
+
+}
