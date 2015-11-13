@@ -22,11 +22,15 @@ object ImplicitShow {
 	// we have to deal with the fact that we need a new Show
 	// instance for every type of Traversable, since Traversable
 	// is itself parameterized 
-	implicit def showTraversable[T]: Show[Traversable[T]] = 
-		new Show[Traversable[T]] {
-			def show(t: Traversable[T]) = 
-				t.mkString("\t")
-		}
+	implicit def showTraversable[T: Show]: Show[Traversable[T]] = 
+	  new Show[Traversable[T]] {
+	    def show(trav: Traversable[T]) = 
+              trav
+                .map(x => implicitly[Show[T]].show(x))
+                .foldLeft("") {
+                  (accum, elem) => s"$accum $elem"
+                }
+          }
 
 }
 
@@ -34,9 +38,12 @@ object ImplicitShow {
 
 println(ImplicitShow.ShowString.show("hello"))
 println(ImplicitShow.ShowInt.show(-1252))
-println(ImplicitShow.showTraversable.show(Traversable(1,2,3)))
+// println(ImplicitShow.showTraversable.show(Traversable(1,2,3)))
 
 // let's do it with implicit parameter
+
+def printShowable[T](t: T)(s: Show[T]) = 
+	println(s.show(t))
 
 def printShowable1[T](t: T)(implicit s: Show[T]) =
 	println(s.show(t))

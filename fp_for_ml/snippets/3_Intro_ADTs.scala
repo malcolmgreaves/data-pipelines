@@ -29,10 +29,12 @@ type UUID = Long
 case class User(name: UserName, id: UUID)
 
 sealed trait Request
+
 case class FetchInformation(u: User) extends Request
 case object SystemStatus extends Request
 
 type Message = String
+
 case class PostToFeed(u: User, m: Message) extends Request
 
 case class Send(from: User, m: Message, to: User) extends Request
@@ -61,6 +63,11 @@ handle(PostToFeed(u1, "I am l33t"))
 val u2 = User("sally", 666363l)
 handle(Send(u2, "Please be quiet.", u1))
 handle(SystemStatus)
+
+
+sealed trait MaybeString
+case class Just(a: String) extends MaybeString
+case object NoString extends MaybeString
 
 
 // the following fails at compile time

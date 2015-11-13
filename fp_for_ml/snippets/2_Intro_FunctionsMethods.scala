@@ -19,7 +19,7 @@ printJohn(firstClass)
 
 // just like scope
 // the last line of a method or function is the value
-(a:Int,b:Int,c:Int) = {
+(a:Int,b:Int,c:Int) => {
 	val temp = a + b
 	temp + c
 }
@@ -41,7 +41,7 @@ method(name="Diane", age=13)
 method(name="Diane", 13) 
 
 // partial application: from method to function !
-val m: = method _
+val m = method _
 // m has type (String, Int) => String
 m("john", 9001)
 
