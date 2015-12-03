@@ -46,29 +46,13 @@ object Experiment20NewsGroups extends App {
         (ng, loadDir(fileAt(dir20NG)(ng)))
       }
 
-  val pgpSignedMessage = "-----BEGIN PGP SIGNED MESSAGE-----"
-
-  def parseNewsgroupFormat(content: String): String = {
-    val heuristicStripHeader = {
-      val pgpIndex = content.indexOf(pgpSignedMessage)
-      if (pgpIndex >= 0)
-        content.substring(pgpIndex, content.length)
-
-      else {
-        val firstNewline = content.indexOf("\n")
-        if (firstNewline >= 0)
-          content.substring(firstNewline, content.length)
-        else
-          content
-      }
-    }
-    heuristicStripHeader.toLowerCase
-  }
-
   val corpus: Traversable[String] =
     byNewsgroup
-      .flatMap(_._2)
-      .map(parseNewsgroupFormat)
+      .flatMap {
+        case (_, fileContentPerDir) => fileContentPerDir
+      }
+      .filter { content => content.length > 4000 }
+      .map { content => content.toLowerCase }
       .toTraversable
 
   println(s"${corpus.size} documents across ${byNewsgroup.size} newsgroups")
@@ -97,15 +81,15 @@ object Experiment20NewsGroups extends App {
     data.toIndexedSeq(Random.nextInt(data.size))._1
 
   val testingDoc =
-    //    testingVectors.head._1 // is alt.atheism
-    selectRandomly(testingVectors)
+    testingVectors.head._1
+//    selectRandomly(testingVectors)
 
-  val k = 25
+  val k = 5
   println(s"Using k= $k\n================\n\n\n\n")
   val topKToFirst = nnRanker.rank(testingDoc, k)
 
   val safeShowDoc =
-    (doc: String) => doc.substring(0, math.min(1000, doc.length))
+    (doc: String) => doc.substring(0, math.min(3000, doc.length))
 
   println(s"Testing on document:\n================\n${safeShowDoc(testingDoc)}\n================\n================\n\n")
 
