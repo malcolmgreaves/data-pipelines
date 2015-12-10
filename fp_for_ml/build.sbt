@@ -16,7 +16,7 @@ libraryDependencies ++= Seq(
   "org.scalanlp"      %% "breeze"   % "0.11.2",
   "org.spire-math"    %% "spire"    % "0.11.0",
   "com.quantifind"    %% "wisp"     % "0.0.4",
-  "io.malcolmgreaves" %% "sparkmod" % "0.1.1-SNAPSHOT",
+  "io.malcolmgreaves" %% "sparkmod" % "1.0.0",
   // test
   "org.scalatest"     %% "scalatest"     % "2.2.4" % Test
 )
@@ -29,7 +29,11 @@ resolvers ++= Seq(
 //
 lazy val devConfig = {
   import CompileScalaJava._
-  Config.spark
+  Config.spark.copy(
+    scala = Config.spark.scala.copy(
+      genBBackend = false
+    )
+  )
 }
 scalaVersion := "2.11.7"
 CompileScalaJava.librarySettings(devConfig)

@@ -1,4 +1,4 @@
-addSbtPlugin("com.gonitro" % "sbt-dev-settings" % "0.4.0")
+addSbtPlugin("com.gonitro" % "sbt-dev-settings" % "0.5.0")
 
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.4")
 
