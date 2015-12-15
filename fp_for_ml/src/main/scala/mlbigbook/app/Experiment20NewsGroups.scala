@@ -1,7 +1,5 @@
 package mlbigbook.app
 
-import java.io.{ FileReader, BufferedReader, File }
-
 import fif.TravData
 import mlbigbook.data.SimpleVec
 import mlbigbook.ml.{ Euclidian, NearestNeighbors }
@@ -10,55 +8,20 @@ import scala.util.Random
 
 object Experiment20NewsGroups extends App {
 
-  def load(fi: File): String = {
-    val br = new BufferedReader(new FileReader(fi))
-    val sb = new StringBuilder()
-    var line: String = br.readLine()
-    while (line != null) {
-      sb
-        .append(line)
-        .append("\n")
-      line = br.readLine()
-    }
-    sb.toString()
-  }
-
-  def whitespaceTokenizer(s: String): IndexedSeq[String] =
-    s.split("\\\\s+").toIndexedSeq
-
   implicit val _ = TravData
 
   import DataFor20Newsgroups._
 
-  def loadDir(d: File): Traversable[String] =
-    Option(d.listFiles())
-      .map { files =>
-        files
-          .map(load)
-          .toTraversable
-      }
-      .getOrElse(Traversable.empty[String])
-
-  val byNewsgroup =
-    newsgroups
-      .map { ng =>
-        println(s"Loading $ng")
-        (ng, loadDir(fileAt(dir20NG)(ng)))
-      }
-
-  val corpus: Traversable[String] =
-    byNewsgroup
-      .flatMap {
-        case (_, fileContentPerDir) => fileContentPerDir
-      }
-      .filter { content => content.length > 4000 }
-      .map { content => content.toLowerCase }
-      .toTraversable
-
-  println(s"${corpus.size} documents across ${byNewsgroup.size} newsgroups")
-
   import ShowImplicits._
-  val (vectors, vectorizeable) = BagOfWords(whitespaceTokenizer)(corpus)
+
+  val corpus = new TwentyNewsgroups
+
+  if (corpus.documents.size == 0) {
+    println(s"empty corpus in ${TwentyNewsgroups.dir20NG} -- exiting")
+    sys.exit(1)
+  }
+
+  val (vectors, vectorizeable) = BagOfWords(Corpus.whitespaceTokenizer)(corpus.documents)
 
   val (trainingVectors, testingVectors) = {
     val shuffled =
@@ -104,34 +67,5 @@ object Experiment20NewsGroups extends App {
 }
 
 object DataFor20Newsgroups {
-
-  def fileAt(parent: File)(parts: String*) =
-    parts.foldLeft(parent)((f, p) => new File(f, p))
-
-  val dataDir = fileAt(new File("."))("data")
-  val dir20NG = fileAt(dataDir)("20_newsgroups")
-
-  val newsgroups = IndexedSeq(
-    "alt.atheism",
-    "comp.graphics",
-    "comp.os.ms-windows.misc",
-    "comp.sys.ibm.pc.hardware",
-    "comp.sys.mac.hardware",
-    "comp.windows.x",
-    "misc.forsale",
-    "rec.autos",
-    "rec.motorcycles",
-    "rec.sport.baseball",
-    "rec.sport.hockey",
-    "sci.crypt",
-    "sci.electronics",
-    "sci.med",
-    "sci.space",
-    "soc.religion.christian",
-    "talk.politics.guns",
-    "talk.politics.mideast",
-    "talk.politics.misc",
-    "talk.religion.misc"
-  )
 
 }
