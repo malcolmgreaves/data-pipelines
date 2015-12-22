@@ -1,6 +1,6 @@
 package mlbigbook.app
 
-import java.io.{FileReader, BufferedReader, File}
+import java.io.{ FileReader, BufferedReader, File }
 
 trait Corpus {
   val documents: Traversable[String]

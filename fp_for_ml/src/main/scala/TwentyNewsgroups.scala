@@ -33,7 +33,6 @@ object TwentyNewsgroups {
   )
 }
 
-
 class TwentyNewsgroups extends Corpus {
 
   import TwentyNewsgroups._

@@ -45,7 +45,7 @@ object Experiment20NewsGroups extends App {
 
   val testingDoc =
     testingVectors.head._1
-//    selectRandomly(testingVectors)
+  //    selectRandomly(testingVectors)
 
   val k = 5
   println(s"Using k= $k\n================\n\n\n\n")
